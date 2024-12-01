@@ -4,3 +4,7 @@ plotly==5.18.0
 sqlalchemy==2.0.23
 psycopg2-binary==2.9.9
 python-dotenv==1.0.0
+pytest==7.4.4
+pytest-cov==4.1.0
+flake8==6.1.0
+black==23.12.1

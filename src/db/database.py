@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 from loguru import logger
 import os
 
-
-
 class DatabaseConnection:
     """
     Manages database connection and data retrieval
