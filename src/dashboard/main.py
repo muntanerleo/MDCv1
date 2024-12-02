@@ -1,6 +1,7 @@
+import os
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go  # Add this import
+import plotly.graph_objects as go
 
 from src.db.database import DatabaseConnection
 from src.db.preprocessing import preprocess_drug_details_1
@@ -18,6 +19,7 @@ class MedicationDashboard:
         db_connection = DatabaseConnection()
         raw_df = db_connection.load_drug_details('drug_details_1')
         self.df = preprocess_drug_details_1(raw_df)
+        self.raw_df = raw_df  # Store raw_df for later use
     
     
     def overview_panel(self):
@@ -318,6 +320,37 @@ class MedicationDashboard:
         st.plotly_chart(fig)
     
     
+    def db_panel(self):
+        """
+        Create panel to display database table
+        """
+        st.header("Database Viewer")
+        st.dataframe(self.raw_df)
+    
+    
+    def raw_data_panel(self):
+        """
+        Panel to upload and view CSV data from the data folder.
+        """
+        st.header("Raw Data Viewer")
+        
+        # Allow the user to select a CSV file from the data folder
+        data_folder = "../../data/medicine_dataset.csv"
+        
+        # Check if the file exists
+        if not os.path.exists(data_folder):
+            st.error(f"Raw data not found at `{data_folder}`. Please check again later.")
+            return
+        
+        # Read and display the CSV file
+        try:
+            csv_df = pd.read_csv(data_folder)
+            st.write(f"Displaying contents of: `{os.path.basename(data_folder)}`")
+            st.dataframe(csv_df)
+        except Exception as e:
+            st.error(f"Error reading the file: {e}")
+    
+    
     def render(self):
         """
         Main dashboard layout and navigation
@@ -332,7 +365,9 @@ class MedicationDashboard:
                 "Generics",
                 "Drug Comparison",
                 "Administration Needs",
-                "Habit Correlation"
+                "Habit Correlation",
+                "Database Viewer",
+                "Raw Data Viewer"
             ]
         )
         
@@ -347,3 +382,7 @@ class MedicationDashboard:
             self.administration_needs_panel()
         elif page == "Habit Correlation":
             self.habit_correlation_panel()
+        elif page == "Database Viewer":
+            self.db_panel()
+        elif page == "Raw Data Viewer":
+            self.db_panel()
