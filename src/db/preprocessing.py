@@ -1,6 +1,6 @@
 import pandas as pd
 
-def preprocess_medication_data(df: pd.DataFrame) -> pd.DataFrame:
+def preprocess_drug_details_1(df: pd.DataFrame) -> pd.DataFrame:
     """
     Preprocess the medication DataFrame
     
@@ -17,7 +17,7 @@ def preprocess_medication_data(df: pd.DataFrame) -> pd.DataFrame:
     processed_df['generic_names'] = processed_df.apply(
         lambda row: ', '.join([row[f'generic_name_{i}'] 
                             for i in range(1, 6) 
-                            if pd.notna(row[f'generic_name_{i}'])]), 
+                            if pd.notna(row[f'generic_name_{i}']) and row[f'generic_name_{i}'] != 'NA']), 
         axis=1
     )
     
@@ -25,7 +25,7 @@ def preprocess_medication_data(df: pd.DataFrame) -> pd.DataFrame:
     processed_df['side_effects'] = processed_df.apply(
         lambda row: ', '.join([row[f'side_effect_{i}'] 
                             for i in range(1, 6) 
-                            if pd.notna(row[f'side_effect_{i}'])]), 
+                            if pd.notna(row[f'side_effect_{i}']) and row[f'side_effect_{i}'] != 'NA']), 
         axis=1
     )
     

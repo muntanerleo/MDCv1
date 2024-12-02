@@ -3,7 +3,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Engine
 import pandas as pd
 from dotenv import load_dotenv
-from loguru import logger
 import os
 
 class DatabaseConnection:
@@ -30,7 +29,7 @@ class DatabaseConnection:
         # Construct connection string from environment variables
         db_params = {
             'host': os.getenv('DB_HOST'),
-            # 'port': os.getenv('DB_PORT', '5432'),
+            'port': os.getenv('DB_PORT', '5432'),
             'database': os.getenv('DB_NAME'),
             'user': os.getenv('DB_USER'),
             'password': os.getenv('DB_PASSWORD')
@@ -54,22 +53,19 @@ class DatabaseConnection:
         except Exception as e:
             raise RuntimeError(f"Database connection error: {e}")
     
-    def load_medications_data(self) -> pd.DataFrame:
+    def load_drug_details(self, table_name: str) -> pd.DataFrame:
         """
         Load medication data from PostgreSQL database
         
         Returns:
             pd.DataFrame: Medication data
         """
-        query = """
-        SELECT * 
-        FROM public.drug_details_1
-        """
+        query = f"SELECT * FROM public.{table_name}"
         
         try:
             return pd.read_sql(query, self.engine)
         except Exception as e:
-            raise RuntimeError(f"Error loading medication data: {e}")
+            raise RuntimeError(f"Error loading medication data from {table_name}: {e}")
     
     def __del__(self):
         """

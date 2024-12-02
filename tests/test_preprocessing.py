@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 import numpy as np
 
-from your_module import preprocess_medication_data  # Replace with actual import path
+from src.db import preprocess_drug_details_1
 
 class TestMedicationDataPreprocessing:
     def test_generic_names_combination(self):
@@ -26,7 +26,7 @@ class TestMedicationDataPreprocessing:
         ]
         
         # Process the DataFrame
-        processed_df = preprocess_medication_data(input_df)
+        processed_df = preprocess_drug_details_1(input_df)
         
         # Assertions
         assert 'generic_names' in processed_df.columns
@@ -56,7 +56,7 @@ class TestMedicationDataPreprocessing:
         ]
         
         # Process the DataFrame
-        processed_df = preprocess_medication_data(input_df)
+        processed_df = preprocess_drug_details_1(input_df)
         
         # Assertions
         assert 'side_effects' in processed_df.columns
@@ -78,7 +78,7 @@ class TestMedicationDataPreprocessing:
         ])
         
         # Process the empty DataFrame
-        processed_df = preprocess_medication_data(input_df)
+        processed_df = preprocess_drug_details_1(input_df)
         
         # Assertions
         assert processed_df.empty
@@ -101,7 +101,7 @@ class TestMedicationDataPreprocessing:
         original_df = input_df.copy()
         
         # Process the DataFrame
-        _ = preprocess_medication_data(input_df)
+        _ = preprocess_drug_details_1(input_df)
         
         # Verify original DataFrame remains unchanged
         pd.testing.assert_frame_equal(input_df, original_df)
@@ -117,7 +117,7 @@ class TestMedicationDataPreprocessing:
         })
         
         # Process the DataFrame
-        processed_df = preprocess_medication_data(input_df)
+        processed_df = preprocess_drug_details_1(input_df)
         
         # Assertions
         assert 'generic_names' in processed_df.columns
@@ -143,7 +143,7 @@ class TestMedicationDataPreprocessing:
         expected_side_effects = ['Drowsiness', 'Headache']
         
         # Process the DataFrame
-        processed_df = preprocess_medication_data(input_df)
+        processed_df = preprocess_drug_details_1(input_df)
         
         # Assertions
         assert 'generic_names' in processed_df.columns

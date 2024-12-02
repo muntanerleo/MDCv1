@@ -4,7 +4,7 @@ import pandas as pd
 from unittest.mock import patch, MagicMock
 from sqlalchemy.exc import OperationalError
 
-from your_module import DatabaseConnection  # Replace with the actual import path
+from src.db import DatabaseConnection  
 
 class TestDatabaseConnection:
     @patch.dict(os.environ, {
